@@ -68,3 +68,12 @@ def check_balance():
         print("Current Balance:",account.balance)
     else:
         print("Account Not Found")
+def close_account():
+    account_id=int(input("Enter Account ID:"))
+    confirm=input("Are you sure you want to close this account? (yes/no)")
+    if confirm.lower()=="yes":
+        if account_id in accounts:
+            del accounts[account_id]
+            print("Account Closed Successfully")
+        else:
+            print("Account Not Found")
