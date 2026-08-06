@@ -1,9 +1,10 @@
 from account import Account
+from validations import get_account_id
 
 accounts = {}
 
 def create_account():
-    account_id = int(input("Enter Account ID: "))
+    account_id = get_account_id()
 
     if account_id in accounts:
         print("Account ID already exists.")
@@ -19,7 +20,7 @@ def create_account():
     print("Account Created Successfully")
 def view_account():
 
-    account_id = int(input("Enter Account ID : "))
+    account_id = get_account_id()
 
     if account_id in accounts:
 
@@ -33,7 +34,7 @@ def view_account():
     else:
         print("Account Not Found")
 def deposit():
-    account_id=int(input("Enter Account Id:"))
+    account_id=get_account_id()
     if account_id in accounts:
         amount=float(input("Enter Deposit Amount:"))
         account=accounts[account_id]
@@ -43,7 +44,7 @@ def deposit():
     else:
         print("Account not found")
 def withdraw():
-    account_id=int(input("Enter Account ID:"))
+    account_id=get_account_id()
     if account_id in accounts:
         amount=float(input("Enter Withdraw Amount:"))
         account=accounts[account_id]
@@ -59,7 +60,7 @@ def withdraw():
     else:
         print("Account Not Found")
 def check_balance():
-    account_id=int(input("Enter Account ID:"))
+    account_id=get_account_id()
     if account_id in accounts:
         account=accounts[account_id]
         print("-----Balance Details-----")
@@ -69,7 +70,7 @@ def check_balance():
     else:
         print("Account Not Found")
 def close_account():
-    account_id=int(input("Enter Account ID:"))
+    account_id=get_account_id()
     confirm=input("Are you sure you want to close this account? (yes/no)")
     if confirm.lower()=="yes":
         if account_id in accounts:
