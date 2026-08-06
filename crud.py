@@ -42,3 +42,19 @@ def deposit():
         print("Current Balance:",account.balance)
     else:
         print("Account not found")
+def withdraw():
+    account_id=int(input("Enter Account ID:"))
+    if account_id in accounts:
+        amount=float(input("Enter Withdraw Amount:"))
+        account=accounts[account_id]
+        if amount<=0:
+            print("Invalid Amount")
+            return
+        if amount>account.balance:
+            print("Insufficient balance")
+            return
+        account.balance-=amount
+        print("Amount Withdrawn Successfully")
+        print("Current Balance:",account.balance)
+    else:
+        print("Account Not Found")
