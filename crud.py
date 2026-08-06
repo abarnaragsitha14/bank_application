@@ -58,3 +58,13 @@ def withdraw():
         print("Current Balance:",account.balance)
     else:
         print("Account Not Found")
+def check_balance():
+    account_id=int(input("Enter Account ID:"))
+    if account_id in accounts:
+        account=accounts[account_id]
+        print("-----Balance Details-----")
+        print("Account ID:",account.account_id)
+        print("Customer Name:",account.customer_name)
+        print("Current Balance:",account.balance)
+    else:
+        print("Account Not Found")
