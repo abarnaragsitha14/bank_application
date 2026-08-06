@@ -3,32 +3,35 @@ while True:
 
     print("\n========== SecureBank ==========")
     print("1. Create Account")
-    print("2. Deposit")
-    print("3. Withdraw")
-    print("4. Check Balance")
-    print("5. Close Account")
-    print("6. Exit")
-
-    choice = int(input("Enter your choice: "))
+    print("2. View Account")
+    print("3. Deposit")
+    print("4. Withdraw")
+    print("5. Check Balance")
+    print("6. Close Account")
+    print("7. Exit")
+    choice = int(input("Enter your choice:"))
 
     if choice == 1:
-        print("Create Account Selected")
+        crud.create_account()
 
     elif choice == 2:
-        print("Deposit Selected")
+        crud.view_account()
 
     elif choice == 3:
-        print("Withdraw Selected")
+       crud.deposit()
 
     elif choice == 4:
-        print("Balance Selected")
+        crud.withdraw()
 
     elif choice == 5:
-        print("Close Account Selected")
+        crud.check_balance()
 
     elif choice == 6:
-        print("Thank you for using SecureBank!")
-        break
+        crud.close_account()
+    elif choice==7:
+         print("Thank You for using SecureBank")
+         break
+        
 
     else:
         print("Invalid Choice")
