@@ -1,7 +1,12 @@
 from account import Account
 from validations import get_account_id
-
+from exceptions import  AccountNotFoundError    
 accounts = {}
+def find_account():
+    account_id=get_account_id()
+    if account_id not in accounts:
+        raise AccountNotFoundError("Account Not Found")
+    return accounts[account_id]
 
 def create_account():
     account_id = get_account_id()
@@ -20,55 +25,39 @@ def create_account():
     print("Account Created Successfully")
 def view_account():
 
-    account_id = get_account_id()
+    account = find_account()
 
-    if account_id in accounts:
-
-        account = accounts[account_id]
-
-        print("\n------ Account Details ------")
-        print("Account ID :", account.account_id)
-        print("Customer Name :", account.customer_name)
-        print("Balance :", account.balance)
-
-    else:
-        print("Account Not Found")
+    print("\n----- Account Details -----")
+    print("Account ID :", account.account_id)
+    print("Customer Name :", account.customer_name)
+    print("Balance :", account.balance)
 def deposit():
-    account_id=get_account_id()
-    if account_id in accounts:
-        amount=float(input("Enter Deposit Amount:"))
-        account=accounts[account_id]
-        account.balance+=amount
-        print("Amount Deposited Successfully")
-        print("Current Balance:",account.balance)
-    else:
-        print("Account not found")
+    account = find_account()
+    amount = float(input("Enter Deposit Amount : "))
+    if amount <= 0:
+        print("Invalid Amount")
+        return
+    account.balance += amount
+    print("Amount Deposited Successfully")
+    print("Current Balance :", account.balance)
+
+
+
 def withdraw():
-    account_id=get_account_id()
-    if account_id in accounts:
-        amount=float(input("Enter Withdraw Amount:"))
-        account=accounts[account_id]
-        if amount<=0:
-            print("Invalid Amount")
-            return
-        if amount>account.balance:
-            print("Insufficient balance")
-            return
-        account.balance-=amount
-        print("Amount Withdrawn Successfully")
-        print("Current Balance:",account.balance)
-    else:
-        print("Account Not Found")
+    account = find_account()
+    amount = float(input("Enter Withdraw Amount : "))
+    if amount <= 0:
+        print("Invalid Amount")
+        return
+    if amount > account.balance:
+        print("Insufficient Balance")
+        return
+    account.balance -= amount
+    print("Amount Withdrawn Successfully")
+    print("Current Balance :", account.balance)
 def check_balance():
-    account_id=get_account_id()
-    if account_id in accounts:
-        account=accounts[account_id]
-        print("-----Balance Details-----")
-        print("Account ID:",account.account_id)
-        print("Customer Name:",account.customer_name)
-        print("Current Balance:",account.balance)
-    else:
-        print("Account Not Found")
+    account = find_account()
+    print("Current Balance :", account.balance)
 def close_account():
     account_id=get_account_id()
     confirm=input("Are you sure you want to close this account? (yes/no)")

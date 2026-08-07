@@ -15,7 +15,11 @@ while True:
         crud.create_account()
 
     elif choice == 2:
-        crud.view_account()
+        try:
+            crud.view_account()
+        except Exception as e:
+            print(e)
+
 
     elif choice == 3:
        crud.deposit()
