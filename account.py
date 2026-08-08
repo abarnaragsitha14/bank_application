@@ -3,3 +3,4 @@ class Account:
         self.account_id=account_id
         self.customer_name=customer_name
         self.balance=balance
+        self.transactions=[]
