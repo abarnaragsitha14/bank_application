@@ -8,7 +8,8 @@ while True:
     print("4. Withdraw")
     print("5. Check Balance")
     print("6. Close Account")
-    print("7. Exit")
+    print("7. Transfer")
+    print("8. Exit")
     choice = int(input("Enter your choice:"))
 
     if choice == 1:
@@ -33,6 +34,8 @@ while True:
     elif choice == 6:
         crud.close_account()
     elif choice==7:
+        crud.transfer()
+    elif choice==8:
          print("Thank You for using SecureBank")
          break
         

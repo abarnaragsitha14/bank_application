@@ -1,6 +1,7 @@
 from account import Account
 from validations import get_account_id
 from exceptions import  AccountNotFoundError    
+from transaction import Transaction
 accounts = {}
 def find_account():
     account_id=get_account_id()
@@ -67,3 +68,37 @@ def close_account():
             print("Account Closed Successfully")
         else:
             print("Account Not Found")
+def transfer():
+    from_id=get_account_id()
+    to_id=get_account_id()
+    if from_id not in accounts:
+        raise AccountNotFoundError("Sender Account Not Found")
+    if to_id not in accounts:
+        raise AccountNotFoundError("Receiver Account Not Found")
+    amount=float(input("Enter Transfer amount:"))
+    if amount<=0:
+        print("Invalid amount")
+        return
+    
+    from_account = accounts[from_id]
+    to_account = accounts[to_id]
+
+    if amount > from_account.balance:
+        print("Insufficient Balance")
+        return
+
+    from_account.balance -= amount
+    to_account.balance += amount
+
+    transaction = Transaction(
+        "TRANSFER",
+        amount,
+        from_id,
+        to_id
+    )
+
+    from_account.transactions.append(transaction)
+    to_account.transactions.append(transaction)
+
+    print("Transfer Successful")
+    print("Sender Balance :", from_account.balance)
