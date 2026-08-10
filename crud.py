@@ -63,14 +63,24 @@ def check_balance():
     account = find_account()
     print("Current Balance :", account.balance)
 def close_account():
-    account_id=get_account_id()
-    confirm=input("Are you sure you want to close this account? (yes/no)")
-    if confirm.lower()=="yes":
-        if account_id in accounts:
-            del accounts[account_id]
-            print("Account Closed Successfully")
-        else:
-            print("Account Not Found")
+
+    account_id = get_account_id()
+
+    if account_id not in accounts:
+        raise AccountNotFoundError("Account Not Found")
+
+    account = accounts[account_id]
+
+    customer_name = account.customer_name
+
+    del accounts[account_id]
+
+    customer_index[customer_name].remove(account_id)
+
+    if not customer_index[customer_name]:
+        del customer_index[customer_name]
+
+    print("Account Closed Successfully")
 def transfer():
 
     from_id = get_account_id()
