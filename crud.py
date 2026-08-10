@@ -69,17 +69,22 @@ def close_account():
         else:
             print("Account Not Found")
 def transfer():
-    from_id=get_account_id()
-    to_id=get_account_id()
+
+    from_id = get_account_id()
+    to_id = get_account_id()
+
     if from_id not in accounts:
         raise AccountNotFoundError("Sender Account Not Found")
+
     if to_id not in accounts:
         raise AccountNotFoundError("Receiver Account Not Found")
-    amount=float(input("Enter Transfer amount:"))
-    if amount<=0:
-        print("Invalid amount")
+
+    amount = float(input("Enter Transfer Amount : "))
+
+    if amount <= 0:
+        print("Invalid Amount")
         return
-    
+
     from_account = accounts[from_id]
     to_account = accounts[to_id]
 
@@ -87,18 +92,41 @@ def transfer():
         print("Insufficient Balance")
         return
 
-    from_account.balance -= amount
-    to_account.balance += amount
+    old_from_balance = from_account.balance
+    old_to_balance = to_account.balance
 
-    transaction = Transaction(
-        "TRANSFER",
-        amount,
-        from_id,
-        to_id
-    )
+    try:
 
-    from_account.transactions.append(transaction)
-    to_account.transactions.append(transaction)
+        from_account.balance -= amount
 
-    print("Transfer Successful")
-    print("Sender Balance :", from_account.balance)
+        to_account.balance += amount
+        
+
+        transaction = Transaction(
+            "TRANSFER",
+            amount,
+            from_id,
+            to_id
+        )
+
+        from_account.transactions.append(transaction)
+        to_account.transactions.append(transaction)
+
+        print("Transfer Successful")
+        print("Sender Balance :", from_account.balance)
+
+    except Exception as e:
+
+        from_account.balance = old_from_balance
+        to_account.balance = old_to_balance
+
+        if 'transaction' in locals():
+            if transaction in from_account.transactions:
+                from_account.transactions.remove(transaction)
+
+            if transaction in to_account.transactions:
+                to_account.transactions.remove(transaction)
+
+        print("Transfer Failed")
+        print("Transaction Rolled Back")
+        print("Reason :", e)
