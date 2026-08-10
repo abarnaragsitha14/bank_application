@@ -130,3 +130,32 @@ def transfer():
         print("Transfer Failed")
         print("Transaction Rolled Back")
         print("Reason :", e)
+def reverse_last_transaction():
+
+    account_id = get_account_id()
+
+    if account_id not in accounts:
+        raise AccountNotFoundError("Account Not Found")
+
+    account = accounts[account_id]
+
+    if not account.transactions:
+        print("No transactions found.")
+        return
+
+    transaction = account.transactions[-1]
+
+    if transaction.transaction_type != "TRANSFER":
+        print("Last transaction cannot be reversed.")
+        return
+
+    from_account = accounts[transaction.from_account]
+    to_account = accounts[transaction.to_account]
+
+    from_account.balance += transaction.amount
+    to_account.balance -= transaction.amount
+
+    from_account.transactions.remove(transaction)
+    to_account.transactions.remove(transaction)
+
+    print("Last Transaction Reversed Successfully")

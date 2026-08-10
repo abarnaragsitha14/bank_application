@@ -9,7 +9,8 @@ while True:
     print("5. Check Balance")
     print("6. Close Account")
     print("7. Transfer")
-    print("8. Exit")
+    print("8. Reverse Transaction")
+    print("9. Exit")
     choice = int(input("Enter your choice:"))
 
     if choice == 1:
@@ -36,6 +37,8 @@ while True:
     elif choice==7:
         crud.transfer()
     elif choice==8:
+        crud.reverse_last_transaction()
+    elif choice==9:
          print("Thank You for using SecureBank")
          break
         
