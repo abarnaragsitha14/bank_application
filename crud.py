@@ -2,7 +2,9 @@ from account import Account
 from validations import get_account_id
 from exceptions import  AccountNotFoundError    
 from transaction import Transaction
+from collections import defaultdict
 accounts = {}
+customer_index=defaultdict(list)
 def find_account():
     account_id=get_account_id()
     if account_id not in accounts:
@@ -22,6 +24,7 @@ def create_account():
     acc = Account(account_id, customer_name, balance)
 
     accounts[account_id] = acc
+    customer_index[customer_name].append(account_id)
 
     print("Account Created Successfully")
 def view_account():
@@ -159,3 +162,18 @@ def reverse_last_transaction():
     to_account.transactions.remove(transaction)
 
     print("Last Transaction Reversed Successfully")
+def find_accounts_by_customer():
+
+    customer_name = input("Enter Customer Name : ")
+
+    account_ids = customer_index.get(customer_name, [])
+
+    if not account_ids:
+        print("No accounts found for this customer.")
+        return
+
+    print("\n----- Customer Accounts -----")
+    print("Customer Name :", customer_name)
+
+    for account_id in account_ids:
+        print("Account ID :", account_id)
